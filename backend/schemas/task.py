@@ -47,7 +47,6 @@ class Task(Document):
         title="Level",
         description="Level of task.",
         examples=[0],
-        ge=0,
     )
     display: bool = Field(
         default=True,

@@ -140,6 +140,12 @@ class User(Document):
         examples=["username"],
         min_length=1
     )
+    ig_account: str = Field(
+        title="Instagram Account",
+        description="User's Instagram account.",
+        examples=["username"],
+        min_length=1,
+    )
     email: Annotated[str, Indexed(unique=True)] = Field(
         title="Email",
         description="User's email.",
@@ -204,6 +210,7 @@ class User(Document):
 
 class UserCreate(BaseModel):
     name: str = Field(min_length=1)
+    ig_account: str = Field(min_length=1)
     email: str
     phone: str
     gender: GENDER_TYPE
@@ -227,6 +234,7 @@ class UserCreate(BaseModel):
 
 class UserUpdate(BaseModel):
     name: Optional[str] = Field(None, min_length=1)
+    ig_account: Optional[str] = Field(None, min_length=1)
     phone: Optional[str] = None
     gender: Optional[GENDER_TYPE] = None
     department: Optional[DEPARTMENT_TYPE] = None
@@ -250,6 +258,7 @@ class GlobalUserView(BaseModel):
 
 
 class UserView(GlobalUserView):
+    ig_account: str
     email: str
     phone: str
     gender: GENDER_TYPE
