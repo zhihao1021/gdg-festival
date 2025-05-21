@@ -1,0 +1,41 @@
+.field {
+    font-size: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 1rem 0;
+
+    .key {
+        width: 5rem;
+    }
+
+    .inputBox {
+        flex: 1;
+        max-width: calc(100% - 5.5rem);
+    }
+}
+
+.buttonBox {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+
+    button {
+        padding: 0.25rem 1rem;
+        border-radius: 0.25rem;
+
+        &.reset {
+            background-color: $input-error;
+        }
+
+        &.save {
+            background-color: $accept;
+        }
+
+        &:disabled {
+            background-color: $disabled;
+        }
+    }
+}

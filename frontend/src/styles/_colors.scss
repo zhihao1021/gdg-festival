@@ -1,0 +1,58 @@
+// @mixin color-map {
+//     @media (prefers-color-scheme: dark) {
+//         --color-primary: #d66829;
+//         --color-secondary: #75300a;
+//         --color-accent: #c64601;
+
+//         --color-context: #f4ece7;
+//         --color-background: #070403;
+//     }
+// }
+
+// $context: var(--color-context, #18100b);
+// $background: var(--color-background, #fcf9f8);
+// $primary: var(--color-primary, #d66829);
+// $secondary: var(--color-secondary, #f5af8a);
+// $accent: var(--color-accent, #fe7e39);
+
+// // $box-context: #000000;
+// // $box-background: #FFFFFF;
+
+// // $disabled: var(--color-disabled, #B0B0B0);
+// // $accept: var(--color-accept, #4CAF50);
+// // $input-error: var(--color-input-error, #E24343);
+// // $progress-background: #DDD;
+// // $progress-bar: #999;
+// // $context: #000000;
+// // $background: #DFDFDF;
+// $box-context: #000000;
+// $box-background: #FFFFFF;
+
+// $disabled: #B0B0B0;
+// $accept: #4CAF50;
+// $input-error: #E24343;
+// $progress-background: #DDD;
+// $progress-bar: #999;
+
+// // --text: #18100b;
+// // --background: #fcf9f8;
+// // --primary: #d66829;
+// // --secondary: #f5af8a;
+// // --accent: #fe7e39;
+$context: #FFFFFF;
+$primary: #5040a0;
+$secondary: #a855f7;
+$accent: #54d2e3;
+$background: #202020;
+$bar-background-color: #00000033;
+$card-text-color: #e9d6b1;
+$card-background-color: #a85c05;
+
+$disabled: #B0B0B0;
+$input-error: #ff7373;
+$progress-background: #DDD;
+$progress-bar: #999;
+
+$accept: #4CAF50;
+$pending: #FFA500;
+$border-color: #777777;

@@ -10,7 +10,7 @@ import styles from "./index.module.scss";
 type propsType = Readonly<{
     data?: Task,
     buttonText: string,
-    callback: (data: TaskCreate) => Promise<void>,
+    callback: (data: TaskCreate) => Promise<any>,
     successMessage: string,
     failedMessage: string,
 }>;
@@ -63,7 +63,7 @@ export default function EditTask(props: propsType): ReactNode {
             total_count: totalCount,
             level: level,
             display: display,
-            release_date: Math.floor(Date.now() / 1000),
+            release_date: data?.release_date ?? Math.floor(Date.now() / 1000),
         }).then(() => {
             reset();
             setMessage(successMessage);
@@ -72,7 +72,7 @@ export default function EditTask(props: propsType): ReactNode {
             setMessage(failedMessage);
             setTimeout(() => setMessage(""), 2000);
         }).finally(() => setLoading(false));
-    }, [reset, title, description, points, totalCount, level, display, callback, successMessage, failedMessage]);
+    }, [reset, title, description, points, totalCount, level, display, callback, successMessage, failedMessage, data]);
 
     useEffect(() => {
         if (data === undefined) return;

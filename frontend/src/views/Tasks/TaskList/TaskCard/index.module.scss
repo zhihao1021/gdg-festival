@@ -1,0 +1,180 @@
+.taskCard {
+    position: relative;
+    width: 100%;
+    background-color: #755e8d30;
+    background-color: color.scale($primary, $lightness: -75%);
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    border: 1px solid $border-color;
+
+    &[data-disabled=true] {
+        filter: brightness(0.5);
+    }
+
+    >div {
+        padding: 1rem;
+
+        &:has(+hr) {
+            padding-bottom: 0.5rem;
+        }
+    }
+
+    >hr+div {
+        padding-top: 0.8rem;
+    }
+
+    >hr {
+        width: 100%;
+        border: none;
+        height: 1px;
+        background-color: $border-color;
+        margin: 0;
+    }
+
+    .tagBox {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0;
+        gap: 0.5rem;
+        display: flex;
+
+        >div {
+            padding: 0.15rem 0.75rem;
+            border-radius: 100vmax;
+            font-size: 0.85rem;
+        }
+
+        .pending {
+            background-color: $pending;
+        }
+
+        .finished {
+            background-color: $accept;
+        }
+
+        .level {
+            &[data-level="0"] {
+                background-color: color.scale($primary, $lightness: 30%);
+            }
+
+            &[data-level="1"] {
+                background-color: color.scale($primary, $lightness: 15%);
+            }
+
+            &[data-level="2"] {
+                background-color: $primary;
+            }
+        }
+    }
+
+
+    .uid {
+        color: $disabled;
+        font-size: 0.85rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin: 0.25rem 0;
+        text-shadow: 0 0 0.5rem $accent;
+    }
+
+    div:has(.box) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem 1rem;
+
+        .box {
+            width: 100%;
+            display: flex;
+            gap: 1rem;
+            font-size: 1.1rem;
+
+            .icon {
+                line-height: 1.15em;
+                color: $accent;
+                font-size: 1.5rem;
+            }
+        }
+
+        .half {
+            width: calc(50% - 0.5rem);
+        }
+    }
+
+    .progressBox {
+        .remain {
+            font-size: 0.9rem;
+            padding-inline-start: 0.2em;
+        }
+
+        .progress {
+            position: relative;
+            width: 100%;
+            height: 0.4rem;
+            border-radius: 0.2rem;
+            background-color: color.scale($primary, $lightness: -10%);
+            margin: 0.5rem 0;
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: calc(5% + 95% * var(--progress));
+                background-color: $accent;
+                border-radius: inherit;
+                box-shadow: 0 0 0.5rem $accent;
+            }
+        }
+    }
+
+    .buttonBox {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1rem;
+
+        &[data-has-message=false]:not(:has(button)) {
+            padding: 0;
+        }
+
+        .message {
+            font-size: 1.25rem;
+        }
+
+        button {
+            position: relative;
+            padding: 0.35rem 1.25rem;
+            border-radius: 0.25rem;
+
+            >div {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                background-color: inherit;
+            }
+
+            &.acquire {
+                background-color: $primary;
+
+                &:disabled {
+                    background-color: color.scale($disabled, $lightness: -20%);
+                }
+            }
+
+            &.finished {
+                background-color: $secondary;
+            }
+
+            &.cancel {
+                background-color: color.adjust($accent, $saturation: -60%);
+            }
+        }
+    }
+}
