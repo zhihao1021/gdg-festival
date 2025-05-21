@@ -56,6 +56,7 @@ router = APIRouter(
 async def get_task_list() -> list[TaskView]:
     return await Task.find(
         Task.display == True,
+        Task.release_date <= datetime.now(),
         projection_model=TaskView,
     ).to_list()
 

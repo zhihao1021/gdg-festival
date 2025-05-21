@@ -114,7 +114,6 @@ UIDDepends = Annotated[SnowflakeID, uid_depends]
 
 
 async def check_is_admin(decode_data: Annotated[JWTPayload, Depends(valid_token)]) -> None:
-    print(decode_data)
     if not decode_data.is_admin:
         raise INVALIDE_AUTHENTICATION_CREDENTIALS
 
