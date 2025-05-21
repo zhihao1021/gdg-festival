@@ -1,0 +1,31 @@
+.score {
+    background-color: $card-background-color;
+    width: 100%;
+    box-sizing: border-box;
+    color: #000;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    color: $card-text-color;
+    gap: 1rem;
+
+    .icon {
+        font-size: 2.6rem;
+        width: 3.8rem;
+        height: 3.8rem;
+        line-height: 3.8rem;
+        border-radius: 1.9rem;
+        background-color: rgba($card-text-color, 0.3);
+        text-align: center;
+    }
+
+    .scoreInfo {
+        width: calc(100% - 4.8rem);
+        .value {
+            color: color.scale($card-text-color, $lightness: 80%);
+            font-size: 2rem;
+            font-weight: bold;
+        }
+    }
+}

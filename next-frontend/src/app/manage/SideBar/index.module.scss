@@ -1,0 +1,30 @@
+.sideBar {
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid $border-color;
+    width: 12rem;
+    font-size: 1.25rem;
+    box-sizing: border-box;
+
+    h4 {
+        font-size: 1.5rem;
+        margin: 0;
+        margin-bottom: 1rem;
+    }
+
+    hr {
+        border: none;
+        height: 1px;
+        background-color: $border-color;
+    }
+
+    a {
+        transition: text-shadow 0.3s;
+        text-shadow: 0 0 0 $accent;
+
+        &:hover {
+            text-shadow: 0 0 0.5rem $accent;
+        }
+    }
+}

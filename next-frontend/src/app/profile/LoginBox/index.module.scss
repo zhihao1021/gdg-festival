@@ -1,0 +1,136 @@
+.mask,
+.continue,
+.errorBox {
+    width: 20rem;
+    box-sizing: border-box;
+    max-width: 82%;
+}
+
+.mask {
+    position: relative;
+    height: calc(3.9rem * var(--count, 1) - 0.5rem);
+    overflow: hidden;
+    transition: height 0.3s;
+
+    .inputBox {
+        position: absolute;
+        top: 0;
+        left: calc(100% * var(--shift, 0));
+        width: 100%;
+        transition: left 0.3s;
+
+        .inputField {
+            font-size: 1.75rem;
+            width: 100%;
+            height: 2.7rem;
+
+            &:not(:last-child) {
+                margin-bottom: 1.2rem;
+            }
+        }
+
+    }
+
+    &:has(div[data-options-count="1"]>input:focus) {
+        height: calc(3.9rem * var(--count, 1) - 0.5rem + 1 * 3.0625rem * 0.72);
+    }
+
+    &:has(div[data-options-count="2"]>input:focus) {
+        height: calc(3.9rem * var(--count, 1) - 0.5rem + 2 * 3.0625rem * 0.72);
+    }
+
+    &:has(div[data-options-count="3"]>input:focus) {
+        height: calc(3.9rem * var(--count, 1) - 0.5rem + 3 * 3.0625rem * 0.72);
+    }
+}
+
+.passwordBox {
+    position: relative;
+    overflow: hidden;
+    height: 0;
+    transition: height 0.3s;
+
+    &[data-show=true] {
+        height: 3.2rem;
+
+        &[data-register=true] {
+            height: 7.4rem;
+        }
+    }
+
+    >.inputField {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        max-width: 100%;
+    }
+
+    >.inputField:nth-child(2) {
+        top: 4.2rem;
+    }
+}
+
+.errorBox {
+    position: relative;
+    margin-top: 0;
+    overflow: hidden;
+    height: 0;
+    transition: height 0.3s, margin-top 0.3s;
+
+    &[data-show=true] {
+        margin-top: 1rem;
+        height: 2.5rem;
+    }
+
+    .errorMessage {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $input-error;
+        width: 100%;
+        height: 2.5rem;
+        line-height: 1.5rem;
+        padding: 0.5rem 1rem;
+        box-sizing: border-box;
+        border-radius: 0.5rem;
+    }
+}
+
+.continue {
+    position: relative;
+    background-color: #339A22;
+    font-size: 1.25rem;
+    border-radius: 0.5rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem -0.1rem #000;
+    height: 2.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, background-color 0.3s;
+
+    &:hover {
+        transform: translateY(-0.2rem);
+    }
+
+    &:disabled {
+        background-color: #666;
+    }
+
+    &[data-loading=true] .text {
+        opacity: 0;
+    }
+
+    .text {
+        transition: opacity 0.3s;
+    }
+
+    .loadingStrip {
+        position: absolute;
+        top: 0;
+        left: 20%;
+        width: 60%;
+        height: 100%;
+    }
+}

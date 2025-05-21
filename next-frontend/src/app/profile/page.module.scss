@@ -1,0 +1,59 @@
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    height: calc(100vh - 8rem);
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2rem 0;
+
+    h1 {
+        margin-top: 0;
+        text-align: center;
+    }
+}
+
+.profile {
+    width: 100%;
+
+    .infoCard {
+        width: 100%;
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+        padding: 1.25rem 1rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        color: $card-text-color;
+        background-color: $card-background-color;
+        box-shadow: 0.1rem 0.1rem 0.2rem -0.1rem #000;
+
+        img {
+            height: 5rem;
+            width: 5rem;
+            object-fit: cover;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - 6rem);
+
+            >div {
+                overflow-x: hidden;
+                text-wrap: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .uid {
+                font-size: 0.85rem;
+            }
+
+            .name {
+                font-size: 1.6rem;
+            }
+        }
+    }
+}

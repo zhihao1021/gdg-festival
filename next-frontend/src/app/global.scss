@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
+
+:root {
+  font-size: min(1rem, 4vw);
+  color-scheme: light dark;
+
+  // @include color-map;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+
+  color: $context;
+  background-color: $background;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-noto-sans-tc);
+  padding: 4.5rem calc(max(2.5vw, 50vw - $max-contexnt-width / 2));
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+label>input[type="checkbox"] {
+  display: none;
+}
+
+input,
+button {
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+}
+
+
+button {
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+h1 {
+  font-size: 2.15rem;
+  margin: 1rem 0;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin: 0.8rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+.ms,
+.ms-p::before,
+.ms-p::after,
+.ms-bp::before,
+.ms-ap::after {
+  font-family: "Material Symbols Outlined";
+  user-select: none;
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 48;
+}

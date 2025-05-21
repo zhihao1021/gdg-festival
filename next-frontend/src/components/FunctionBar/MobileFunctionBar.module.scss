@@ -1,0 +1,47 @@
+.mobileFunctionBar {
+    position: fixed;
+    bottom: -1px;
+    left: 0;
+    height: 3.8rem;
+    width: 100vw;
+    background-color: $bar-background-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    backdrop-filter: blur(10px);
+    font-size: 1.35rem;
+    transition: bottom 0.3s;
+
+    &[data-show=false] {
+        bottom: -3.8rem;
+    }
+
+    a {
+        transition: opacity 0.3s;
+
+        &[data-selected=false] {
+            opacity: 0.3;
+        }
+    }
+}
+
+.scrollToTop {
+    position: fixed;
+    bottom: 5rem;
+    right: 1rem;
+    z-index: 10;
+    background-color: $primary;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    width: 2.5rem;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    transition: box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0 0 0rem $accent;
+    transform: scale(0);
+
+    &[data-show=true] {
+        transform: scale(1);
+        box-shadow: 0 0 0.3rem $accent;
+    }
+}

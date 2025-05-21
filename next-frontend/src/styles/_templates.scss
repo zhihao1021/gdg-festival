@@ -1,0 +1,39 @@
+@mixin box-shadow($unit: 0.1rem) {
+    box-shadow: $unit $unit (
+        2 * $unit) (-1 * $unit) #000;
+}
+
+@mixin hover-float($delta: 0.15rem) {
+    transition: transform 0.3s;
+
+    &:hover {
+        transform: translateY(-1 * $delta
+        );
+}
+}
+
+@mixin before {
+    &::before {
+        content: "";
+        position: absolute;
+        @content;
+    }
+}
+
+@mixin after {
+    &::after {
+        content: "";
+        position: absolute;
+        @content;
+    }
+}
+
+@mixin before-after {
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        @content;
+    }
+}

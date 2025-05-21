@@ -1,0 +1,64 @@
+.field {
+    display: flex;
+    font-size: 1.25rem;
+    gap: 1rem;
+    align-items: center;
+    margin: 1rem 0;
+    height: 2.5rem;
+
+    .key {
+        width: 8rem;
+    }
+
+    .inputBox {
+        width: calc(100% - 9rem);
+    }
+
+    label {
+        position: relative;
+        height: 2rem;
+        width: 3.5rem;
+        border-radius: 1rem;
+        background-color: $context;
+        transition: background-color 0.3s;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0.1rem;
+            left: 0.1rem;
+            height: 1.8rem;
+            width: 1.8rem;
+            border-radius: 0.9rem;
+            background-color: $background;
+            transition: left 0.3s;
+        }
+
+        &:has(input:checked) {
+            background-color: $accept;
+
+            &::after {
+                left: 1.6rem;
+            }
+        }
+    }
+}
+
+.buttonBox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.15rem;
+
+    button {
+        padding: 0.25rem 1rem;
+        background-color: $accept;
+        transition: background-color 0.3s;
+        border-radius: 0.35rem;
+
+        &:disabled {
+            background-color: $disabled;
+        }
+    }
+}

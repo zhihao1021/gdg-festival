@@ -1,0 +1,80 @@
+.title {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.start {
+    display: flex;
+    margin: auto;
+    width: fit-content;
+    font-size: 1.25rem;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    padding: 0.35rem 1.25rem;
+    margin: 2rem auto;
+    background-color: $primary;
+    align-items: center;
+    animation: shadow 1.5s infinite forwards;
+
+    .icon {
+        font-size: 1.5rem;
+        padding-top: 0.25rem;
+    }
+
+    @keyframes shadow {
+        0% {
+            box-shadow: 0 0 0.5rem $accent;
+        }
+
+        50% {
+            box-shadow: 0 0 1.75rem $accent;
+        }
+
+        100% {
+            box-shadow: 0 0 0.5rem $accent;
+        }
+    }
+}
+
+.split {
+    border: none;
+    height: 1px;
+    width: 100%;
+    background-color: $border-color;
+    margin-top: 5rem;
+}
+
+.howTo {
+    display: flex;
+    background-color: #131313;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    gap: 1rem;
+    border: 1px solid $border-color;
+    border-radius: 0.75rem;
+    margin: 1rem 0;
+
+    .icon {
+        height: 2.5rem;
+        width: 2.5rem;
+        line-height: 2.5rem;
+        text-align: center;
+        font-size: 1.25rem;
+        background-image: linear-gradient(-45deg, $primary, $secondary 20%, $accent);
+        border-radius: 50%;
+        margin-top: 0.5rem;
+    }
+
+    .context {
+        max-width: calc(100% - 3.5rem);
+
+        h3 {
+            margin: 0;
+            margin-bottom: 0.25rem;
+            color: #98cfc9;
+        }
+    }
+
+}

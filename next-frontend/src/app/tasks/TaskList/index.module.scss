@@ -1,0 +1,50 @@
+.dateList {
+    display: flex;
+    height: 2rem;
+    margin: 0.5rem 0;
+    align-items: center;
+    gap: 0.5rem;
+
+    button {
+        font-size: 1.75rem;
+        box-sizing: border-box;
+        width: 2rem;
+        text-align: center;
+        padding: 0;
+        transition: color 0.3s;
+
+        &:disabled {
+            color: $disabled;
+        }
+    }
+
+    .dateMask {
+        position: relative;
+        width: calc(100% - 5rem);
+        height: 100%;
+        overflow: hidden;
+
+        .date {
+            position: absolute;
+            display: flex;
+            gap: 0.5rem;
+            height: 100%;
+            top: 0;
+            left: calc(50% - 2rem - (4.5rem * var(--index, 0)));
+            transition: left 0.3s;
+
+            .dateItem {
+                width: 4rem;
+                font-size: 1.25rem;
+                text-align: center;
+                transition: transform 0.3s, color 0.3s;
+                transform-origin: 50% 50%;
+
+                &[data-selected=false] {
+                    color: $disabled;
+                    transform: scale(0.85);
+                }
+            }
+        }
+    }
+}
