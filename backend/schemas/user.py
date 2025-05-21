@@ -191,6 +191,12 @@ class User(Document):
         description="Is user admin.",
         examples=[False]
     )
+    is_ncku: bool = Field(
+        default=True,
+        title="Is NCKU",
+        description="Is user from NCKU.",
+        examples=[False]
+    )
 
     def __eq__(self, value: object) -> bool:
         if not isinstance(value, self.__class__):
@@ -217,6 +223,7 @@ class UserCreate(BaseModel):
     department: DEPARTMENT_TYPE
     department_level: int = Field(ge=1, le=10)
     password: str = Field(min_length=8)
+    is_ncku: bool
 
     @field_validator("email")
     @classmethod
@@ -241,6 +248,7 @@ class UserUpdate(BaseModel):
     department_level: Optional[int] = Field(default=None, ge=1, le=10)
     password: Optional[str] = Field(default=None, min_length=8)
     original_password: Optional[str] = None
+    is_ncku: Optional[bool] = None
 
     @field_serializer("password")
     def password_auto_hash(self, value: str) -> Optional[bytes]:
@@ -263,3 +271,4 @@ class UserView(GlobalUserView):
     phone: str
     gender: GENDER_TYPE
     is_admin: bool
+    is_ncku: bool
