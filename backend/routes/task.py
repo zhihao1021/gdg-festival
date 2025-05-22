@@ -188,7 +188,7 @@ async def acquire_task(
         raise ALREADY_ACQUIRED
 
     time_limit = END_TIME if task.time_limit <= 0 else datetime.now() + \
-        timedelta(hours=task.time_limit + 8)
+        timedelta(hours=task.time_limit)
 
     record = Record(
         task_id=task.uid,

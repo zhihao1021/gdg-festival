@@ -73,12 +73,6 @@ class Record(Document):
         }
 
 
-class RecordUpdate(BaseModel):
-    user_id: Optional[SnowflakeID] = None
-    task_id: Optional[SnowflakeID] = None
-    status: Optional[STATUS] = None
-
-
 class RecordView(BaseModel):
     uid: SnowflakeID
     user_id: SnowflakeID

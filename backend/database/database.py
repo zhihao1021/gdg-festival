@@ -11,6 +11,9 @@ from schemas.user import User
 from schemas.task import Task
 from schemas.avatar import Avatar
 from schemas.record import Record
+from schemas.prize import Prize
+from schemas.prize_order import PrizeOrder
+from schemas.prize_image import PrizeImage
 
 client = AsyncIOMotorClient(
     MONGODB_URI,
@@ -28,6 +31,9 @@ async def setup():
             User,
             Task,
             Avatar,
-            Record
+            Record,
+            Prize,
+            PrizeOrder,
+            PrizeImage
         ]
     )
