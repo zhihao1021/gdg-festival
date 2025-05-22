@@ -43,6 +43,9 @@ router = APIRouter(
     tags=["Prize"]
 )
 
+with open("default_prize.png", "rb") as default_prize:
+    default_image_data = default_prize.read()
+
 
 @router.get(
     path="",
@@ -119,10 +122,10 @@ async def get_prize_count() -> dict[SnowflakeID, int]:
     path="/{prize_id}/image",
     status_code=status.HTTP_200_OK,
 )
-async def get_prize_image(prize_id: str) -> Optional[Response]:
+async def get_prize_image(prize_id: str) -> Response:
     image = await PrizeImage.find_one(PrizeImage.prize_id == prize_id)
     if image is None:
-        return None
+        return Response(default_avatar_data, media_type="image/png")
 
     return Response(image.data, media_type=image.content_type)
 
