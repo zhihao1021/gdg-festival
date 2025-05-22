@@ -66,6 +66,8 @@ class Task(Document):
         description="Time limit of task.",
         examples=[0],
     )
+    method: str = ""
+    link: str = ""
 
     def __eq__(self, value: object) -> bool:
         if not isinstance(value, self.__class__):
@@ -92,14 +94,16 @@ class Task(Document):
 
 
 class TaskCreate(BaseModel):
-    title: str
-    description: str
+    title: str = ""
+    description: str = ""
     points: int
     total_count: int
     level: int
     display: bool
     release_date: int
-    time_limit: int
+    time_limit: int = 0
+    method: str = ""
+    link: str = ""
 
 
 class TaskUpdate(BaseModel):
@@ -110,7 +114,9 @@ class TaskUpdate(BaseModel):
     level: Optional[int] = None
     display: Optional[bool] = None
     release_date: Optional[int] = None
-    time_limit: int
+    time_limit: Optional[int] = None
+    method: Optional[str] = None
+    link: Optional[str] = None
 
     @field_serializer("release_date")
     def valid_release_date(self, release_date: int):
@@ -127,6 +133,8 @@ class TaskView(BaseModel):
     display: bool
     release_date: int
     time_limit: int
+    method: str
+    link: str
 
     @field_validator("release_date", mode="before")
     @classmethod
