@@ -60,6 +60,12 @@ class Task(Document):
         description="Release date of task.",
         examples=[1737170068],
     )
+    time_limit: int = Field(
+        default=0,
+        title="Time Limit",
+        description="Time limit of task.",
+        examples=[0],
+    )
 
     def __eq__(self, value: object) -> bool:
         if not isinstance(value, self.__class__):
@@ -73,8 +79,6 @@ class Task(Document):
             return value
 
         try:
-            if value < 86400:
-                raise ValueError
             return datetime.fromtimestamp(value)
         except:
             raise ValueError
@@ -95,6 +99,7 @@ class TaskCreate(BaseModel):
     level: int
     display: bool
     release_date: int
+    time_limit: int
 
 
 class TaskUpdate(BaseModel):
@@ -105,6 +110,7 @@ class TaskUpdate(BaseModel):
     level: Optional[int] = None
     display: Optional[bool] = None
     release_date: Optional[int] = None
+    time_limit: int
 
     @field_serializer("release_date")
     def valid_release_date(self, release_date: int):
@@ -120,6 +126,7 @@ class TaskView(BaseModel):
     level: int
     display: bool
     release_date: int
+    time_limit: int
 
     @field_validator("release_date", mode="before")
     @classmethod

@@ -2,12 +2,16 @@ from beanie import Document, Indexed
 from pydantic import (
     BaseModel,
     Field,
+    field_serializer,
+    field_validator
 )
 
+from datetime import datetime
 from typing import (
     Annotated,
     Literal,
     Optional,
+    Union
 )
 
 from config import INSTANCE_ID
@@ -40,11 +44,27 @@ class Record(Document):
         description="Status of record.",
         examples=["acquired", "pending", "finished"]
     )
+    time_limit: datetime = Field(
+        title="Time Limit",
+        description="Time limit of record.",
+        examples=["2023-10-01T00:00:00Z"]
+    )
 
     def __eq__(self, value: object) -> bool:
         if not isinstance(value, self.__class__):
             return False
         return self.uid == value.uid
+
+    @field_validator("time_limit", mode="before")
+    @classmethod
+    def valid_release_date(cls, value: Union[int, datetime]):
+        if isinstance(value, int):
+            return value
+
+        try:
+            return int(value.timestamp())
+        except:
+            raise ValueError
 
     class Settings:
         name = "Records"
@@ -64,3 +84,15 @@ class RecordView(BaseModel):
     user_id: SnowflakeID
     task_id: SnowflakeID
     status: STATUS
+    time_limit: int
+
+    @field_validator("time_limit", mode="before")
+    @classmethod
+    def valid_release_date(cls, value: Union[int, datetime]):
+        if isinstance(value, int):
+            return value
+
+        try:
+            return int(value.timestamp())
+        except:
+            raise ValueError

@@ -1,9 +1,11 @@
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
+from datetime import datetime
+
 from schemas.user import User
 from schemas.task import Task
-from schemas.record import Record, RecordUpdate, RecordView
+from schemas.record import Record, RecordView
 
 from .auth import UserDepends, AdminDepends
 
@@ -30,6 +32,8 @@ router = APIRouter(
 async def get_record_list(
     user: UserDepends,
 ) -> list[RecordView]:
+    await Record.find(Record.time_limit < datetime.now(), Record.status == "acquired").delete()
+
     return await Record.find(
         Record.user_id == user.uid,
         projection_model=RecordView
@@ -42,6 +46,8 @@ async def get_record_list(
     dependencies=[AdminDepends]
 )
 async def get_pending_record_list() -> list[RecordView]:
+    await Record.find(Record.time_limit < datetime.now(), Record.status == "acquired").delete()
+
     return await Record.find(
         Record.status == "pending",
         projection_model=RecordView

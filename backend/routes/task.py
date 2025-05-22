@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
 from asyncio import gather, create_task as async_create_task
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from schemas.user import User
 from schemas.task import Task, TaskCreate, TaskUpdate, TaskView
@@ -11,6 +11,8 @@ from schemas.record import Record
 from snowflake import SnowflakeID
 
 from .auth import AdminDepends, IsAdminDepends, UserDepends
+
+END_TIME = datetime(2025, 6, 8, 18)
 
 
 class OnlyReleaseTime(BaseModel):
@@ -91,6 +93,8 @@ async def create_task(data: TaskCreate) -> TaskView:
 )
 async def get_task_acquired_count() -> dict[SnowflakeID, int]:
     task_uids = await Task.find().project(OnlyUid).to_list()
+
+    await Record.find(Record.time_limit < datetime.now(), Record.status == "acquired").delete()
     count_list = await gather(*[
         Record.find(Record.task_id == task.uid).count()
         for task in task_uids
@@ -183,7 +187,15 @@ async def acquire_task(
     if record_exist:
         raise ALREADY_ACQUIRED
 
-    record = Record(task_id=task.uid, user_id=user.uid, status="acquired")
+    time_limit = END_TIME if task.time_limit <= 0 else datetime.now() + \
+        timedelta(hours=task.time_limit + 8)
+
+    record = Record(
+        task_id=task.uid,
+        user_id=user.uid,
+        status="acquired",
+        time_limit=time_limit
+    )
     await record.save()
 
 
