@@ -1,9 +1,10 @@
+from beanie.operators import Set
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
 from datetime import datetime
 
-from schemas.user import User
+from schemas.user import User, UserView
 from schemas.task import Task
 from schemas.record import Record, RecordView
 
@@ -12,6 +13,10 @@ from .auth import UserDepends, AdminDepends
 
 class OnlyScore(BaseModel):
     points: int
+
+
+class RecordWithUserView(RecordView):
+    user: UserView
 
 
 RECORD_NOT_FOUND = HTTPException(
@@ -42,16 +47,25 @@ async def get_record_list(
 
 @router.get(
     path="/pending",
-    response_model=list[RecordView],
+    response_model=list[RecordWithUserView],
     dependencies=[AdminDepends]
 )
-async def get_pending_record_list() -> list[RecordView]:
+async def get_pending_record_list() -> list[RecordWithUserView]:
     await Record.find(Record.time_limit < datetime.now(), Record.status == "acquired").delete()
 
-    return await Record.find(
-        Record.status == "pending",
-        projection_model=RecordView
-    ).to_list()
+    return await Record.find(Record.status == "pending").aggregate([
+        {
+            "$lookup": {
+                "from": "Users",
+                "localField": "user_id",
+                "foreignField": "uid",
+                "as": "user"
+            }
+        },
+        {
+            "$unwind": "$user"
+        }
+    ], projection_model=RecordWithUserView).to_list()
 
 
 @router.post(
@@ -71,6 +85,6 @@ async def update_record(
     if task is None:
         raise RECORD_NOT_FOUND
     await User.find_one(User.uid == record.user_id).inc({User.score: task.points})
-    
-    record = await record.update({Record.status: "finished"})
+
+    record = await record.update(Set({Record.status: "finished"}))
     return RecordView(**record.model_dump())
