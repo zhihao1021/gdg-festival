@@ -92,11 +92,16 @@ async def update_prize(prize_id: str, data: PrizeUpdate) -> Prize:
 )
 async def update_prize_image(prize_id: str, file: UploadFile) -> None:
     data = await file.read()
-    prize_image = PrizeImage(
-        prize_id=SnowflakeID(prize_id),
-        content_type=file.content_type or "",
-        data=data
-    )
+    prize_image = await PrizeImage.find_one(PrizeImage.prize_id == prize_id)
+    if prize_image is None:
+        prize_image = PrizeImage(
+            prize_id=SnowflakeID(prize_id),
+            content_type=file.content_type or "",
+            data=data
+        )
+    else:
+        prize_image.content_type = file.content_type or ""
+        prize_image.data = data
     await prize_image.save()
 
 
@@ -125,7 +130,7 @@ async def get_prize_count() -> dict[SnowflakeID, int]:
 async def get_prize_image(prize_id: str) -> Response:
     image = await PrizeImage.find_one(PrizeImage.prize_id == prize_id)
     if image is None:
-        return Response(default_avatar_data, media_type="image/png")
+        return Response(default_image_data, media_type="image/png")
 
     return Response(image.data, media_type=image.content_type)
 
