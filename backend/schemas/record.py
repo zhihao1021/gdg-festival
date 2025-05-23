@@ -67,7 +67,7 @@ class Record(Document):
             raise ValueError
 
     class Settings:
-        name = "Records"
+        name = "TaskRecords"
         bson_encoders = {
             SnowflakeID: str
         }
