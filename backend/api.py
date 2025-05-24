@@ -13,6 +13,7 @@ from routes.user import router as user_router
 from routes.task import router as task_router
 from routes.record import router as record_router
 from routes.prize import router as prize_router
+from routes.order import router as order_router
 
 
 class SetAuthorizationFromCookiesMiddleware:
@@ -54,6 +55,7 @@ app.include_router(user_router)
 app.include_router(task_router)
 app.include_router(record_router)
 app.include_router(prize_router)
+app.include_router(order_router)
 
 app.add_middleware(
     CORSMiddleware,

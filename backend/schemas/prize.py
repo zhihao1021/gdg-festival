@@ -61,3 +61,11 @@ class PrizeUpdate(BaseModel):
     description: Optional[str] = None
     total_count: Optional[int] = None
     cost: Optional[int] = None
+
+
+class PrizeView(BaseModel):
+    uid: SnowflakeID
+    title: str
+    description: str
+    total_count: int
+    cost: int

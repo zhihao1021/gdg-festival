@@ -9,9 +9,8 @@ from fastapi import (
 from pydantic import BaseModel
 
 from asyncio import gather
-from typing import Optional
 
-from schemas.prize import Prize, PrizeCreate, PrizeUpdate
+from schemas.prize import Prize, PrizeCreate, PrizeUpdate, PrizeView
 from schemas.prize_order import PrizeOrder
 from schemas.prize_image import PrizeImage
 from snowflake import SnowflakeID
@@ -49,40 +48,40 @@ with open("default_prize.png", "rb") as default_prize:
 
 @router.get(
     path="",
-    response_model=list[Prize],
+    response_model=list[PrizeView],
     status_code=status.HTTP_200_OK
 )
-async def get_prizes() -> list[Prize]:
-    return await Prize.find_all().to_list()
+async def get_prizes() -> list[PrizeView]:
+    return await Prize.find_all().project(PrizeView).to_list()
 
 
 @router.post(
     path="",
-    response_model=Prize,
+    response_model=PrizeView,
     status_code=status.HTTP_201_CREATED,
     dependencies=[AdminDepends]
 )
-async def create_prize(data: PrizeCreate) -> Prize:
+async def create_prize(data: PrizeCreate) -> PrizeView:
     prize = Prize(**data.model_dump())
     await prize.save()
 
-    return prize
+    return PrizeView(**prize.model_dump())
 
 
 @router.put(
     path="/{prize_id}",
-    response_model=Prize,
+    response_model=PrizeView,
     status_code=status.HTTP_200_OK,
     dependencies=[AdminDepends]
 )
-async def update_prize(prize_id: str, data: PrizeUpdate) -> Prize:
+async def update_prize(prize_id: str, data: PrizeUpdate) -> PrizeView:
     prize = await Prize.find_one(Prize.uid == prize_id)
     if prize is None:
         raise PRIZE_NOT_FOUND
 
     prize = await prize.update(Set(data.model_dump(exclude_none=True)))
 
-    return prize
+    return PrizeView(**prize.model_dump())
 
 
 @router.post(

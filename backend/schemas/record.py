@@ -10,7 +10,6 @@ from datetime import datetime
 from typing import (
     Annotated,
     Literal,
-    Optional,
     Union
 )
 
