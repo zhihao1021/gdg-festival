@@ -125,5 +125,4 @@ async def get_order_code(user_id: UIDDepends, order_id: str) -> str:
     dependencies=[AdminDepends]
 )
 async def finish_order(order_id: str) -> None:
-    # type: ignore
-    await PrizeOrder.find_one(PrizeOrder.uid == order_id).update(Set({PrizeOrder.finished: True}))
+    await PrizeOrder.find_one(PrizeOrder.uid == order_id).update(Set({PrizeOrder.finished: True})) # type: ignore

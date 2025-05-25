@@ -165,6 +165,7 @@ async def delete_task(
     task_id: str
 ) -> None:
     await Task.find_one(Task.uid == task_id).delete()
+    await Record.find(Record.task_id == task_id).delete()
 
 
 @router.get(
