@@ -68,6 +68,24 @@ async def create_prize(data: PrizeCreate) -> PrizeView:
     return PrizeView(**prize.model_dump())
 
 
+@router.get(
+    path="/count",
+    status_code=status.HTTP_200_OK,
+)
+async def get_prize_count() -> dict[SnowflakeID, int]:
+    prize_uids = await Prize.find().project(OnlyUid).to_list()
+
+    count_list = await gather(*[
+        PrizeOrder.find(PrizeOrder.prize_id == prize.uid).count()
+        for prize in prize_uids
+    ])
+
+    return {
+        prize.uid: count
+        for prize, count in zip(prize_uids, count_list)
+    }
+
+
 @router.put(
     path="/{prize_id}",
     response_model=PrizeView,
@@ -104,22 +122,14 @@ async def update_prize_image(prize_id: str, file: UploadFile) -> None:
     await prize_image.save()
 
 
-@router.get(
-    path="/count",
-    status_code=status.HTTP_200_OK,
+@router.delete(
+    path="/{prize_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[AdminDepends]
 )
-async def get_prize_count() -> dict[SnowflakeID, int]:
-    prize_uids = await Prize.find().project(OnlyUid).to_list()
-
-    count_list = await gather(*[
-        PrizeOrder.find(PrizeOrder.prize_id == prize.uid).count()
-        for prize in prize_uids
-    ])
-
-    return {
-        prize.uid: count
-        for prize, count in zip(prize_uids, count_list)
-    }
+async def delete_prize(prize_id: str) -> None:
+    await Prize.find_one(Prize.uid == prize_id).delete()
+    await PrizeOrder.find(PrizeOrder.prize_id == prize_id).delete()
 
 
 @router.get(

@@ -177,7 +177,6 @@ class User(Document):
         title="Password(Hash)",
         description="Password of user after hash.",
         examples=[b"passw0rd"],
-        min_length=8,
     )
     score: int = Field(
         default=0,
