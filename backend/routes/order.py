@@ -105,6 +105,7 @@ async def get_order_code(user_id: UIDDepends, order_id: str) -> str:
     order = await PrizeOrder.find(
         PrizeOrder.uid == order_id,
         PrizeOrder.user_id == user_id,
+        PrizeOrder.finished == False,
         projection_model=PrizeOrder
     ).exists()
 
@@ -124,4 +125,5 @@ async def get_order_code(user_id: UIDDepends, order_id: str) -> str:
     dependencies=[AdminDepends]
 )
 async def finish_order(order_id: str) -> None:
-    await PrizeOrder.find_one(PrizeOrder.uid == order_id).update(Set({PrizeOrder.finished: True})) # type: ignore
+    # type: ignore
+    await PrizeOrder.find_one(PrizeOrder.uid == order_id).update(Set({PrizeOrder.finished: True}))
