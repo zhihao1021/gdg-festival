@@ -59,7 +59,7 @@ async def update_self_data(user: UserDepends, data: UserUpdate) -> UserView:
         if data.original_password is None:
             del update_data["password"]
         elif user.check_password(data.original_password):
-            del update_data["original"]
+            del update_data["original_password"]
 
     user = await user.update(Set(data.model_dump(exclude_none=True)))
 
