@@ -53,15 +53,7 @@ async def update_self_data(user: UserDepends, data: UserUpdate) -> UserView:
     elif not user.check_password(data.original_password):
         excludes.append("password")
 
-    update_data = data.model_dump(exclude_none=True, exclude=set(excludes))
-
-    if data.password is not None:
-        if data.original_password is None:
-            del update_data["password"]
-        elif user.check_password(data.original_password):
-            del update_data["original_password"]
-
-    user = await user.update(Set(data.model_dump(exclude_none=True)))
+    user = await user.update(Set(data.model_dump(exclude_none=True, exclude=set(excludes))))
 
     return UserView(**user.model_dump())
 
@@ -148,7 +140,8 @@ async def get_all_user_rank() -> list[GlobalUserView]:
     status_code=status.HTTP_200_OK,
 )
 async def get_department_user_rank(department: DEPARTMENT_TYPE) -> list[GlobalUserView]:
-    users = await User.find(User.department == department).sort(-User.score).project(GlobalUserView).to_list() # type: ignore
+    # type: ignore
+    users = await User.find(User.department == department).sort(-User.score).project(GlobalUserView).to_list()
     return users
 
 
@@ -157,5 +150,6 @@ async def get_department_user_rank(department: DEPARTMENT_TYPE) -> list[GlobalUs
     status_code=status.HTTP_200_OK,
 )
 async def get_department_level_user_rank(department: DEPARTMENT_TYPE, department_level: int) -> list[GlobalUserView]:
-    users = await User.find(User.department == department, User.department_level == department_level).sort(-User.score).project(GlobalUserView).to_list() # type: ignore
+    # type: ignore
+    users = await User.find(User.department == department, User.department_level == department_level).sort(-User.score).project(GlobalUserView).to_list()
     return users
