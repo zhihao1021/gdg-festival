@@ -127,7 +127,7 @@ async def get_user_count() -> int:
 
 
 @router.get(
-    path="/rank/all",
+    path="/rank",
     status_code=status.HTTP_200_OK,
 )
 async def get_all_user_rank() -> list[GlobalUserView]:
