@@ -74,7 +74,7 @@ async def get_pending_record_list() -> list[RecordWithUserView]:
     status_code=200,
     dependencies=[AdminDepends]
 )
-async def update_record(
+async def accept_record(
     record_id: str,
 ) -> RecordView:
     record = await Record.find_one(Record.uid == record_id)
@@ -88,3 +88,15 @@ async def update_record(
 
     record = await record.update(Set({Record.status: "finished"}))
     return RecordView(**record.model_dump())
+
+
+@router.post(
+    path="/{record_id}/reject",
+    status_code=200,
+    dependencies=[AdminDepends]
+)
+async def reject_record(
+    record_id: str,
+) -> None:
+    await Record.find_one(Record.uid == record_id).delete()
+    
